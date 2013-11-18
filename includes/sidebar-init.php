@@ -7,7 +7,9 @@ if (!function_exists( 'the_widgets_init')) {
 	    if ( !function_exists( 'register_sidebar') )
 	        return;
 	
-	    register_sidebar(array( 'name' => 'Primary','id' => 'primary','description' => "Normal full width sidebar", 'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="inner">','after_widget' => '</div></section>','before_title' => '<h3>','after_title' => '</h3>'));   
+	    register_sidebar(array( 'name' => 'Home','id' => 'home','description' => "Widetized home page", 'before_widget' => '<li id="%1$s" class="home-widget %2$s"><div class="inner">','after_widget' => '</div></li>','before_title' => '<h3>','after_title' => '</h3>'));   
+	    register_sidebar(array( 'name' => 'Primary','id' => 'primary','description' => "Normal full width sidebar", 'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="inner">','after_widget' => '</div></section>','before_title' => '<h3>','after_title' => '</h3>')); 
+	    register_sidebar(array( 'name' => 'Shop','id' => 'shop-sidebar','description' => "Widetized shop page", 'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="inner">','after_widget' => '</div></section>','before_title' => '<h3>','after_title' => '</h3>'));   
 	    register_sidebar(array( 'name' => 'Footer 1','id' => 'footer-1', 'description' => "Widetized footer", 'before_widget' => '<section id="%1$s" class="widget %2$s">','after_widget' => '</section>','before_title' => '<h3>','after_title' => '</h3>'));
 	    register_sidebar(array( 'name' => 'Footer 2','id' => 'footer-2', 'description' => "Widetized footer", 'before_widget' => '<section id="%1$s" class="widget %2$s">','after_widget' => '</section>','before_title' => '<h3>','after_title' => '</h3>'));
 	    register_sidebar(array( 'name' => 'Footer 3','id' => 'footer-3', 'description' => "Widetized footer", 'before_widget' => '<section id="%1$s" class="widget %2$s">','after_widget' => '</section>','before_title' => '<h3>','after_title' => '</h3>'));

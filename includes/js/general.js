@@ -50,5 +50,16 @@ jQuery(document).ready(function(){
 	jQuery(".featured-products li").eq(4).addClass("fifth");
 	jQuery(".featured-products li").eq(5).addClass("sixth");
 	jQuery(".featured-products li").eq(6).addClass("seventh");
+	
+	
+	// Back to top anchor
+		
+	jQuery('a[href^="#"]#back-to-top').click(function(){
+		jQuery('body,html').animate({
+			scrollTop: 0
+		}, 500);
+		return false;
+	});		
+	
 		
 });

@@ -97,7 +97,7 @@ if ( ! function_exists( 'artificer_woocommerce_layout_body_class' ) ) {
 }
 
 // Add the cart link to the header
-add_action('woo_nav_before', 'artificer_header_cart_link', 20);
+add_action('ks-top-cart', 'artificer_header_cart_link', 20);
 if ( ! function_exists( 'artificer_header_cart_link' ) ) {
 	function artificer_header_cart_link() {
 		if ( class_exists( 'woocommerce' ) ) { echo woocommerce_cart_link(); }
@@ -105,7 +105,7 @@ if ( ! function_exists( 'artificer_header_cart_link' ) ) {
 }
 
 // Add the checkout link to the header
-add_action('woo_nav_before', 'artificer_header_checkout_link',10);
+add_action('ks-top-checkout', 'artificer_header_checkout_link',10);
 if ( ! function_exists( 'artificer_header_checkout_link' ) ) {
 	function artificer_header_checkout_link() {
 	global $woocommerce;

@@ -30,17 +30,38 @@
 <body <?php body_class(); ?>>
 <?php woo_top(); ?>
 
+
+<?php if ( function_exists( 'has_nav_menu' ) && has_nav_menu( 'top-menu' ) ) { ?>
+
+<div id="top">
+
+	<nav class="col-full" role="navigation">
+		<?php wp_nav_menu( array( 'depth' => 6, 'sort_column' => 'menu_order', 'container' => 'ul', 'menu_id' => 'top-nav', 'menu_class' => 'nav fl', 'theme_location' => 'top-menu' ) ); ?>
+		<ul class="shopper-menu">
+		
+			<?php
+			
+			global $woocommerce;
+			
+			if(sizeof( $woocommerce->cart->cart_contents ) > 0) {
+				$in_cart_class = 'not-empty';
+			} else {
+				$in_cart_class = 'empty';
+			}	
+			
+			?>
+			
+			<li class="<?php echo $in_cart_class; ?>"><?php do_action('ks-top-cart'); ?></li>
+			<li><?php do_action('ks-top-checkout'); ?></li>
+		</ul>			
+	</nav>
+	
+</div><!-- /#top -->
+
+<?php } ?>
+
+
 <div id="wrapper">
-
-	<?php if ( function_exists( 'has_nav_menu' ) && has_nav_menu( 'top-menu' ) ) { ?>
-
-	<div id="top">
-		<nav class="col-full" role="navigation">
-			<?php wp_nav_menu( array( 'depth' => 6, 'sort_column' => 'menu_order', 'container' => 'ul', 'menu_id' => 'top-nav', 'menu_class' => 'nav fl', 'theme_location' => 'top-menu' ) ); ?>
-		</nav>
-	</div><!-- /#top -->
-
-    <?php } ?>
     
     <?php woo_header_before(); ?>
 

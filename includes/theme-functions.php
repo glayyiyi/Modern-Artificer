@@ -628,4 +628,24 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 /*-----------------------------------------------------------------------------------*/
 /* END */
 /*-----------------------------------------------------------------------------------*/
+
+
+/*-------------------- */
+/* Add back to top link */
+/*--------------------- */ 
+
+if ( ! function_exists( 'ks_backtotoplink' ) ) {
+
+
+	function ks_backtotoplink(){ ?>
+		
+		<a href="#" id="back-to-top" title="Back to top"></a>
+		
+	<?php }
+	
+}
+
+add_action('woo_foot', 'ks_backtotoplink');
+
+
 ?>

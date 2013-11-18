@@ -15,9 +15,19 @@
 
 	<?php woo_sidebar_inside_before(); ?>
 
-	<?php if ( woo_active_sidebar( 'primary' ) ) { ?>
-		<?php woo_sidebar( 'primary' ); ?>		           
-	<?php } // End IF Statement ?>   
+	
+			<?php 
+				if( is_woocommerce_activated() && is_product() || is_shop() || is_product_tag() || is_product_category()) {
+					if ( woo_active_sidebar( 'shop-sidebar' ) ) { woo_sidebar( 'shop-sidebar' ); } 
+				} else {
+			?>
+		
+		
+	<?php if ( woo_active_sidebar( 'primary' ) ) { ?>	
+		
+		<?php woo_sidebar( 'primary' ); ?>	
+		
+	<?php } }  // End else Statement ?>   
 	
 	<?php woo_sidebar_inside_after(); ?> 
 	

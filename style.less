@@ -135,6 +135,8 @@ sub { bottom: -0.25em; }
 /*-------------------------------------------------------------------------------------------*/
 
 @import url(css/mixins.less);
+// Include mixins lybrary
+@import "mixins/elements.less";
 
 /*-------------------------------------------------------------------------------------------*/
 /* 1. SETUP */
@@ -146,6 +148,7 @@ html {
 	background:url("@{img_path}/body.gif") @bg_light;
 }
 body  {
+	position:relative;
 	font-size:1.4em; // 14 px
 	line-height: 1.618; // golden ratio
 	color: @color_body;
@@ -154,11 +157,17 @@ body  {
     -ms-text-size-adjust: 100%;
 	text-rendering: optimizeLegibility;
 	//-webkit-font-smoothing: antialiased;
-	background: url("@{img_path}/body.png");
+	background: darken(@main_bg, 10%) url("@{img_path}/body.png");
+}
+
+#top{
+	margin:0 auto;
 }
 
 #wrapper {
 	padding:0 1.618em;
+	margin:0 auto;
+	background: @wrap_color;
 }
 
 img  { vertical-align: bottom; max-width: 100%; height: auto; }
@@ -195,6 +204,7 @@ h1, h2, h3, h4, h5, h6  {
 h1  {
 	font-size: 1.618em;
 	line-height: 1.387em;
+	font-weight:normal;
 	text-shadow:
 	0 2px 0 #fff,
 	0 3px 0 @bg_light - #555;
@@ -202,12 +212,15 @@ h1  {
 h2  {
 	font-size: 1.387em;
 	line-height: 1.387em;
+	font-weight:normal;
 }
 h3  {
 	font-size: 1em;
+	font-weight:normal;
 }
 h4  {
 	font-size: 1em;
+	font-weight:normal;
 }
 h5  {
 	font-size: 1em;
@@ -307,18 +320,6 @@ table {
 	thead {
 		border:1px solid @bg_light - #222;
 		.text_shadow(0,1px,0,@bg_light);
-		tr {
-			th {
-				.vertical_gradient(@bg_light, @bg_light - #111);
-				color: @color_body - #222;
-				-webkit-box-shadow:
-					inset 0 2px 0 @bg_light + #111;
-				-moz-box-shadow:
-					inset 0 2px 0 @bg_light + #111;
-				box-shadow:
-					inset 0 2px 0 @bg_light + #111;
-			}
-		}
 	}
 	tbody {
 		tr {
@@ -362,18 +363,15 @@ ul.nav { // Styles applied to all instances of navigation
 	margin-bottom: 2.618em;
 	display: none;
 	font-family: @serif_google, serif;
-	background: url("@{img_path}/nav.gif") @bg_light;
-	.border_radius(.236em);
-	border:1px solid @bg_light - #1a1a1a;
+	border:1px solid @topmenu-bg2 - #1a1a1a;	
+	.vertical_gradient(@topmenu-bg2, @topmenu-bg2 - #111);
+	color: #fff;
 	-webkit-box-shadow:
-		inset 0 0 0 0.382em rgba(255,255,255,0.6),
-		0 1em 2em rgba(0,0,0,0.1);
+		inset 0 2px 0 @topmenu-bg2 + #111;
 	-moz-box-shadow:
-		inset 0 0 0 0.382em rgba(255,255,255,0.6),
-		0 1em 2em rgba(0,0,0,0.1);
+		inset 0 2px 0 @topmenu-bg2 + #111;
 	box-shadow:
-		inset 0 0 0 0.382em rgba(255,255,255,0.6),
-		0 1em 2em rgba(0,0,0,0.1);
+		inset 0 2px 0 @topmenu-bg2 + #111;
 
 	ul.nav {
 		margin-bottom:0;
@@ -417,6 +415,14 @@ ul.nav { // Styles applied to all instances of navigation
 	}
 	#top-nav {
 		display: none;
+	}
+	ul.shopper-menu{
+		display:table;
+		margin-top:40px;
+		margin-left:auto;
+		margin-right:auto;
+		text-align:center;
+		list-style:none;
 	}
 }
 
@@ -542,7 +548,6 @@ ul.nav { // Styles applied to all instances of navigation
 .home {
 	#sidebar {
 		.tweet, .phone, .email { // rotatey styles
-			.rotate(1deg);
 			position: relative;
 			background: url("@{img_path}/leather.png"), url("@{img_path}/noise.png");
 			background-color: @color_links;
@@ -556,7 +561,6 @@ ul.nav { // Styles applied to all instances of navigation
 			.inner {
 				padding:1em 1.618em;
 				border:2px dashed lighten(@color_links,10%);
-				.rotate(-1deg);
 				a {
 					display: block;
 					font-family: @serif_google;
@@ -574,16 +578,6 @@ ul.nav { // Styles applied to all instances of navigation
 				right:0;
 				bottom:0;
 				background: rgba(0,0,0,0.2);
-				.rotate(-1deg);
-			}
-		}
-		.phone {
-			.rotate(-1deg);
-			.inner {
-				.rotate(1deg);
-			}
-			&:before {
-				.rotate(1deg);
 			}
 		}
 		.tweet {
@@ -596,7 +590,6 @@ ul.nav { // Styles applied to all instances of navigation
 			border:0;
 
 			ul {
-				.rotate(-1deg);
 				padding:1em;
 				list-style: none;
 				padding:1em;
@@ -639,15 +632,53 @@ ul.nav { // Styles applied to all instances of navigation
 				top:1em;
 				right:1em;
 				color: rgba(0,0,0,0.25);
-				.rotate(-3deg);
 				text-shadow:none;
 			}
 		}
 		.email {
 			&:after {
 				content: "@";
-				.rotate(2deg);
 				top:.5em;
+			}
+		}
+		.shop-about{
+			position: relative;
+			background: url("@{img_path}/leather.png"), url("@{img_path}/noise.png");
+			background-color: @color_links;
+			.inset_box_shadow(.618em,0,0,0,@color_links - #222);
+			color: lighten(@color_links,30%);
+			margin-bottom:1.618em;
+			padding:1em;
+			list-style: none;
+			position: relative;
+			.text_shadow(0,1px,2px,rgba(0,0,0,0.35));
+			.inner {
+				padding:1em 1.618em;
+				border:2px dashed lighten(@color_links,10%);
+				p{
+					margin-bottom: 0;
+				}
+			}		
+			&:after {
+				font-family: 'WebSymbolsRegular';
+				display: inline-block;
+				content: "R";
+				position: absolute;
+				font-size:40px;
+				top:.32em;
+				right:1em;
+				color: rgba(0,0,0,0.25);
+				text-shadow:none;
+			}
+		}
+		.home-widget{
+			list-style:none;
+			input{
+				&.email{
+					padding:.8em 1em;
+					width: 230px;
+					max-width: 95%;
+				}
 			}
 		}
 	}
@@ -655,7 +686,8 @@ ul.nav { // Styles applied to all instances of navigation
 
 /* 2.6 Footer */
 #footer{
-	padding: 2.618em 0;
+	padding: 2.618em 0 1.218em 0;
+	border-top:1px solid @bg_light - #222;
 	color: lighten(@color_body, 10%);
 	#credit {
 		img {
@@ -668,34 +700,41 @@ ul.nav { // Styles applied to all instances of navigation
 }
 
 #footer-widgets {
-	padding:2.618em;
+	padding:2.618em 0;
 	.borderbox;
-	border:1px solid @bg_light - #222;
-	border-bottom:0;
 	position: relative;
-	background: url("@{img_path}/nav.gif") @bg_light + #111;
-	-webkit-box-shadow:
-		inset 0 .53em 2.618em rgba(0,0,0,0.05),
-		inset 0 0 0 0.618em rgba(255, 255, 255, 0.55),
-		0 1px 1px rgba(0,0,0,0.15), /* The top layer shadow */
-		0 10px 0 -5px #eee, /* The second layer */
-		0 10px 1px -4px rgba(0,0,0,0.125), /* The second layer shadow */
-		0 20px 0 -10px #eee, /* The third layer */
-		0 20px 1px -9px rgba(0,0,0,0.125), /* The third layer shadow */
-		0 1em 2em rgba(0,0,0,0.1);
-	box-shadow:
-		inset 0 .53em 2.618em rgba(0,0,0,0.05),
-		inset 0 0 0 0.618em rgba(255, 255, 255, 0.55),
-		0 1px 1px rgba(0,0,0,0.15), /* The top layer shadow */
-		0 10px 0 -5px #eee, /* The second layer */
-		0 10px 1px -4px rgba(0,0,0,0.125), /* The second layer shadow */
-		0 20px 0 -10px #eee, /* The third layer */
-		0 20px 1px -9px rgba(0,0,0,0.125), /* The third layer shadow */
-		0 1em 2em rgba(0,0,0,0.1);
 	.widget {
 		h3 {
-			border: 0;
+			border-bottom: 1px solid darken(@type_bg,5%);
+			padding-bottom: .327em;
 		}
+	}
+}
+
+
+#back-to-top{
+	position:absolute;
+	width:42px;
+	height:42px;
+	right:20px;
+	bottom:20px;
+	background-color:@topmenu-bg;
+	color:#fff;
+	&:hover{
+		background-color: lighten(@topmenu-bg, 5%);	
+	}
+	&:after{
+		font-family: 'WebSymbolsRegular';	
+		content:'<';	
+		display:block;
+		/* Rotate the banner 90 degrees */
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);	  
+		position: absolute;
+		margin-left:40%;
+		margin-top:24%;
 	}
 }
 
@@ -753,32 +792,14 @@ ul.nav { // Styles applied to all instances of navigation
 
 .post, .type-page {
 	margin:0 0 2.618em;
-	padding:1.618em;
 	position: relative;
-	background: url("@{img_path}/crinkles.png") top no-repeat, url("@{img_path}/post.png"), url("@{img_path}/nav.gif");
-	background-color:  @bg_light + #111;
-	border:1px solid @bg_light - #222;
+	background-color: @type_bg;
 	border-bottom:0;
-	.border_radius(2px);
-	-webkit-box-shadow:
-		inset 0 .53em 2.618em rgba(0,0,0,0.05),
-		inset 0 0 0 0.618em rgba(255, 255, 255, 0.55),
-		0 1px 1px rgba(0,0,0,0.15), /* The top layer shadow */
-		0 10px 0 -5px #eee, /* The second layer */
-		0 10px 1px -4px rgba(0,0,0,0.125), /* The second layer shadow */
-		0 20px 0 -10px #eee, /* The third layer */
-		0 20px 1px -9px rgba(0,0,0,0.125), /* The third layer shadow */
-		0 1em 2em rgba(0,0,0,0.1);
-	box-shadow:
-		inset 0 .53em 2.618em rgba(0,0,0,0.05),
-		inset 0 0 0 0.618em rgba(255, 255, 255, 0.55),
-		0 1px 1px rgba(0,0,0,0.15), /* The top layer shadow */
-		0 10px 0 -5px #eee, /* The second layer */
-		0 10px 1px -4px rgba(0,0,0,0.125), /* The second layer shadow */
-		0 20px 0 -10px #eee, /* The third layer */
-		0 20px 1px -9px rgba(0,0,0,0.125), /* The third layer shadow */
-		0 1em 2em rgba(0,0,0,0.1);
 
+	.woocommerce-page &{
+		background: transparent !important;
+	}
+	
 	header h1 {
 		font-weight: 700;
 		position:relative;
@@ -800,12 +821,15 @@ ul.nav { // Styles applied to all instances of navigation
 	header {
 		h1 {
 			padding-right:4em;
+			padding-top:1.156em;			
+			padding-left:1.156em;			
 		}
 	}
 
 	.post-meta {
 		margin:0 0 1.618em 0;
-		border-bottom:2px dashed darken(@bg_light,5%);
+		padding-left:1.756em;
+		border-bottom:1px solid darken(@type_bg,10%);
 		ul {
 			margin-bottom:.53em;
 		}
@@ -849,18 +873,29 @@ ul.nav { // Styles applied to all instances of navigation
 			}
 		}
 	}
+	
+	.entry{
+		padding-right:1.756em;			
+		padding-left:1.756em;
+		.single &, .page &{
+			padding-bottom:1.756em;
+		}
+		.woocommerce-page &{
+			padding: 0 !important;
+		}
+	}
+	
 	.post-more {
 		clear: both;
 		font-size:.857em;
-		border-top:2px dashed darken(@bg_light,5%);
-		padding-top:1em;
+		border-top:1px solid darken(@type_bg,10%);
+		display:block;
 		a {
-			padding:.327em .618em;
-			background: fade(@bg_light,70%);
-			.border_radius(.202em);
-			margin-right:.53em;
+			display:inline-block;
+			padding:.827em .618em;
+			border-right:1px solid darken(@type_bg,10%); 
 			&:hover {
-				background: fade(@bg_light,90%);
+				background: darken(@feat-h3,5%);
 			}
 			&:before {
 				.iconbefore;
@@ -940,6 +975,7 @@ ul.nav { // Styles applied to all instances of navigation
 }
 
 
+
 /* 3.2 Pagination / WP-Pagenavi / Woo-Pagination */
 .nav-entries, .wp-pagenavi, .woo-pagination {
 	padding:1em 1.618em;
@@ -1001,7 +1037,7 @@ ul.nav { // Styles applied to all instances of navigation
 		img {
 			width:100%;
 			height: auto;
-			padding:.618em .618em 1.618em;
+			padding:.618em;
 			background: #fff;
 			.borderbox();
 			border:1px solid #fff;
@@ -1033,7 +1069,10 @@ ul.nav { // Styles applied to all instances of navigation
 	margin-bottom:1.618em;
 	.newsletter-form {
 		.email {
-			width:140px;
+			width:232px;
+			max-width:100%;
+			padding: 0.83em 0.857em;
+			border-radius:0;
 		}
 	}
 	.social {
@@ -1113,33 +1152,16 @@ ul.nav { // Styles applied to all instances of navigation
 // Widgets in the sidebar
 #sidebar {
 	.widget {
-		.rotate(.5deg);
 		position: relative;
-		background: url("@{img_path}/nav.gif") @bg_light;
 		margin-bottom:1.618em;
-		padding:1em;
 		list-style: none;
 		position: relative;
-		border:1px solid @bg_light - #1a1a1a;
-		-webkit-box-shadow:
-			inset 0 0 0 0.382em rgba(255,255,255,0.6),
-			0 1em 2em rgba(0,0,0,0.1);
-		-moz-box-shadow:
-			inset 0 0 0 0.382em rgba(255,255,255,0.6),
-			0 1em 2em rgba(0,0,0,0.1);
-		box-shadow:
-			inset 0 0 0 0.382em rgba(255,255,255,0.6),
-			0 1em 2em rgba(0,0,0,0.1);
 		.inner {
-			.rotate(-.5deg);
-		}
-		.inner {
-			padding: 1.618em;
-			border:2px dashed darken(@bg_light,10%);
-
+			padding: 0;
 		}
 		h3 {
-			border: 0;
+			border-bottom: 1px solid darken(@type_bg,5%); 
+			padding-bottom: .327em;
 		}
 		&:before, &:after {
 			display: block;
@@ -1151,18 +1173,14 @@ ul.nav { // Styles applied to all instances of navigation
 			height: 1.618em;
 			top:0;
 			width:100%;
-			background: url("@{img_path}/string-top.png") top center no-repeat;
 			margin-top:12px;
 			z-index: 9999;
-			.rotate(.5deg);
 		}
 		&:after {
 			height:3.631em;
 			top:100%;
-			background: url("@{img_path}/string.png") top center no-repeat;
 			width:100%;
 			margin-top:-1.618em;
-			.rotate(-.5deg)
 		}
 		&:last-child:after {
 			display: none;
@@ -1197,9 +1215,6 @@ ul.nav { // Styles applied to all instances of navigation
 	position: relative;
 	label { display: none; }
 	input.s, input#s { padding: .53em .857em; .borderbox(); margin:0; border:0; background: none; color: @color_body; -webkit-box-shadow:none; -moz-box-shadow:none; box-shadow:none;
-		&:focus {
-			-webkit-box-shadow:none; -moz-box-shadow:none; box-shadow:none;
-		}
 	}
 	input.search-submit, input#searchsubmit {
 		position: absolute;
@@ -1423,58 +1438,18 @@ ul.nav { // Styles applied to all instances of navigation
 		}
 	}
 	.comment-container, .comment_container {
-		padding:2.244em 1.618em 2.244em 4.236em;
+		padding-bottom: 1.236em;
 		list-style: none;
-		background: url("@{img_path}/comment.png") top left repeat-y #f5f1db;
 		.lifted();
-		.border_radius(.236em);
-		-webkit-box-shadow:
-			0 .202em .382em 0 rgba(0,0,0,0.075),
-			inset 0 0 0 1px #faf9ef,
-			inset 0 .53em 2.618em rgba(0,0,0,0.05);
-		-moz-box-shadow:
-			0 .202em .382em 0 rgba(0,0,0,0.075),
-			inset 0 0 0 1px #faf9ef,
-			inset 0 .53em 2.618em rgba(0,0,0,0.05);
-		box-shadow:
-			0 .202em .382em 0 rgba(0,0,0,0.075),
-			inset 0 0 0 1px #faf9ef,
-			inset 0 .53em 2.618em rgba(0,0,0,0.05);
-		border:1px solid @bg_light - #1f1f1f;
+		border-bottom:1px solid @border_main;
 		margin-bottom:1.618em;
-		font-family: 'Schoolbell', sans-serif; // gloria hallelujah
 		color: desaturate(lighten(@color_body,10%),20%);
-		.text_shadow(0,1px,0,rgba(255,255,255,0.6));
 		.star-rating, .star-rating span {
 			background-image: url("@{img_path}/ico-star-scribbled.png");
 		}
 		&.thread-even {
 		}
 		&.bypostauthor {
-		}
-		.meta, .comment-head {
-			&:before {
-				content: "";
-				height: 1em;
-				width: 1em;
-				border:1px solid @bg_light - #333;
-				position: absolute;
-				bottom:40%;
-				left:1em;
-				display: block;
-				z-index: 99999;
-				background: url("@{img_path}/body.gif");
-				.border_radius(1em);
-				-webkit-box-shadow:
-					0 1px 0 rgba(255,255,255,0.76),
-					inset 0 1px 2px @bg_light - #222;
-				-moz-box-shadow:
-					0 1px 0 rgba(255,255,255,0.76),
-					inset 0 1px 2px @bg_light - #222;
-				box-shadow:
-					0 1px 0 rgba(255,255,255,0.76),
-					inset 0 1px 2px @bg_light - #222;
-			}
 		}
 		.comment-container {
 			position: relative;
@@ -1504,7 +1479,7 @@ ul.nav { // Styles applied to all instances of navigation
 		img.avatar {
 			float: right;
 			margin:0 0 1em 1em;
-			padding:.382em .382em 1em;
+			padding:.382em .382em .382em;
 			background: #fff;
 			.box_shadow(0,1px,2px,0,rgba(0,0,0,0.2));
 			position: relative;
@@ -1514,20 +1489,11 @@ ul.nav { // Styles applied to all instances of navigation
 		.reply {
 			a {
 				font-family: @sans_google;
-				&:before {
-					.iconbefore;
-					content: "h";
-				}
 			}
 		}
 		.meta, .comment-head {
 			font-family: @sans_google;
 			color: @color_body;
-		}
-	}
-	.comment_container {
-		&:before, &:after {
-			.box_shadow(0,13px,5px,0,rgba(0,0,0,0.3));
 		}
 	}
 
@@ -1828,16 +1794,6 @@ a.remove {
 	del {
 		position: relative;
 		padding:0 .327em;
-		text-decoration: none;
-		&:before {
-			content: "";
-			position: absolute;
-			top:0;
-			left:0;
-			right:0;
-			bottom:0;
-			background: url("@{img_path}/scribble.png") 0 3px repeat-x;
-		}
 	}
 	ins {
 		text-decoration: none;
@@ -2067,81 +2023,40 @@ ul.products {
 		text-align: center;
 		margin-bottom:3.631em;
 		.img-wrap {
-			padding:.618em .618em 2.244em;
+			padding:.618em;
 			background:  #fff;
 			.borderbox();
-			.rotate(1deg);
 			position: relative;
-			-webkit-box-shadow:
-				0 .077em .236em rgba(0,0,0,0.2),
-				inset 0 .202em 1.618em rgba(0,0,0,0.05);
-			-moz-box-shadow:
-				0 .077em .236em rgba(0,0,0,0.2),
-				inset 0 .202em 1.618em rgba(0,0,0,0.05);
-			box-shadow:
-				0 .077em .236em rgba(0,0,0,0.2),
-				inset 0 .202em 1.618em rgba(0,0,0,0.05);
+			.box_shadow(0,0, .118em,0,rgba(0,0,0,0.15));
 			margin-bottom:1em;
 
-			img {
-				.rotate(-1deg);
-			}
 			&:hover {
-				.box_shadow(0,.618em,1.618em,0,rgba(0,0,0,0.25));
-				-webkit-transform:scale(1.1) !important;
-				-moz-transform:scale(1.1) !important;
-				transform:scale(1.1) !important;
+				.box_shadow(0,0, .100em,0,darken(@topmenu-bg,1%));			
 				img {
 					-webkit-transform:none !important;
 					-moz-transform:none !important;
 					transform:none !important;
 				}
 			}
-			&:before {
-				content: "";
-				display: block;
-				z-index: 99999;
-				height:32px;
-				width:87px;
-				position: absolute;
-				left:25%;
-				top:-.618em;
-				background: url("@{img_path}/tape.png");
-				.rotate(-2deg);
-			}
 		}
 		&:nth-child(2n) {
 			.img-wrap {
-				.rotate(-1deg);
 				top:2px;
-				img {
-					.rotate(1deg);
-				}
 				&:before {
 					left:30%;
-					.rotate(3deg);
 				}
 			}
 		}
 		&:nth-child(3n) {
 			.img-wrap {
-				.rotate(-1.5deg);
-				img {
-					.rotate(1.5deg);
-				}
 				&:before {
 					left:35%;
-					.rotate(2.5deg);
 				}
 			}
 		}
 		&:nth-child(5n) {
 			.img-wrap {
-				.rotate(1.5deg);
 				top:-2px;
-				img {
-					.rotate(-1.5deg);
-				}
 			}
 		}
 		.price {
@@ -2490,15 +2405,20 @@ table.cart {
 			margin-bottom:1em;
 			a {
 				display: block;
+				&:hover{
+					img{
+						.box_shadow(0,0, .100em,0,darken(@topmenu-bg,1%));		
+					}
+				}
 			}
 			img {
 				float: right;
 				width:2.244em;
 				height: auto;
-				padding:.236em .236em .618em;
+				padding:.236em;
 				background: #fff;
 				margin-left:1em;
-				.box_shadow(0,1px,2px,0,rgba(0,0,0,0.2));
+				.box_shadow(0,0, .118em,0,rgba(0,0,0,0.15));
 			}
 		}
 	}
@@ -2847,8 +2767,7 @@ ul.digital-downloads {
 // Input / Textarea
 input[type=text], input.input-text, textarea, input.txt {
 	padding: .53em .857em;
-	border: 1px solid lighten(@color_body,30%);
-	.border_radius(.236em);
+	border: 1px solid @border_main;
 	font-size: 1em; /* Make inputs the same size as normal text */
 	line-height: 1.618em;
 	font-size: .857em;
@@ -2856,12 +2775,7 @@ input[type=text], input.input-text, textarea, input.txt {
 	outline:none;
 	.borderbox();
 	color: @color_body;
-	.box_shadow(0,0,.236em,0,lighten(@color_body,50%));
 	.transition();
-	&:focus {
-		.box_shadow(0,0,.618em,0,lighten(@color_theme,30%));
-		border: 1px solid lighten(@color_theme,20%);
-	}
 }
 
 ::-webkit-input-placeholder {
@@ -2932,6 +2846,10 @@ button.button,
 			background-color: @color_links - #111;
 		}
 	}
+}
+
+.add_to_cart_button{
+	padding: 0 !important;
 }
 
 .chrome, .safari {

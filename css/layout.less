@@ -38,10 +38,27 @@ INDEX
 
 /*----------------------*/
 
+@media only screen and (min-width: 1199px) {
+
+	#wrapper, #top  {
+		width:1140px;
+	}	
+
+}
+
+@media only screen and (min-width: 990px) and (max-width: 1198px) {
+
+	#wrapper, #top  {
+		width:980px;
+	}
+
+}
+
+
 
 @media only screen and (min-width: 768px) {
 
-	#wrapper  {
+	#wrapper, #top  {
 		padding: 0 2.618em;
 		.borderbox();
 		overflow-x: hidden;
@@ -62,7 +79,7 @@ INDEX
 			list-style: none;
 			a {
 				display: block;
-				padding:.857em 1.387em;
+				padding:1.1em 1.387em;
 			}
 			&.parent { // Styles applied to all parent list items
 				a {
@@ -126,46 +143,25 @@ INDEX
 
 	/* 2. TOP NAVIGATION (Add top navigation presentational styles here) */
 	#top {
-		background: url("@{img_path}/noise.png"), url("@{img_path}/leather.png");
-		background-color: darken(@color_body,10%);
-		border-bottom:.146em dashed lighten(@color_body,5%);
-		border-top:.327em solid darken(@color_body,20%);
+		background-color: @topmenu-bg;
 		font-weight: 700;
-		-webkit-box-shadow:
-			0 .236em 0 darken(@color_body,15%),
-			0 .382em 1em rgba(0,0,0,0.25),
-			inset 0 -1px 0 darken(@color_body,15%);
-		-moz-box-shadow:
-			0 .236em 0 darken(@color_body,15%),
-			0 .382em 1em rgba(0,0,0,0.25),
-			inset 0 -1px 0 darken(@color_body,15%);
-		box-shadow:
-			0 .236em 0 darken(@color_body,15%),
-			0 .382em 1em rgba(0,0,0,0.25),
-			inset 0 -1px 0 darken(@color_body,15%);
 		.lifted();
-		margin: 0 -2.618em;
-		padding:0 2.618em;
 		#top-nav {
 			display: block;
 		}
 		a {
-			.text_shadow(0,-1px,0,@color_body - #333);
-			color: @color_body + #444;
-			&:hover {
-				color: @color_links + #111;
-			}
+			color: #fff;
 		}
 		ul.nav {
 			font-size:.857em; // this adjusts the scale of the entire navigation and everything just works like magic
 			> li { // The following styles are applied ONLY to the top level list items
 				a {
 					&:hover {
-						.vertical_gradient(@color_body,darken(@color_body,5%));
+						background-color: darken(@topmenu-bg, 10%);
 					}
 				}
 				&:hover {
-					.vertical_gradient(@color_body,darken(@color_body,5%));
+					background-color: darken(@topmenu-bg, 10%);
 				}
 				&.logout {
 					a {
@@ -191,6 +187,42 @@ INDEX
 			li:hover > ul {
 			}
 		}
+		ul.shopper-menu{
+			list-style:none;
+			float:right;
+			margin-bottom:0;
+			margin-top:0;
+			margin-left:0;
+			margin-right:0;
+			text-align:left;		
+			font-size: 0.857em;			
+			&:before, &:after{
+				display:table;
+				content:'';
+				clear:both;
+			}
+			li{					
+				position: relative;
+				float: left;
+				zoom:1;
+				list-style: none;
+				a {
+					display: block;
+					padding:1.1em 1.387em;
+					&:hover {
+						background-color: darken(@topmenu-bg, 10%);
+					}						
+				}
+				&:hover {
+					background-color: darken(@topmenu-bg, 10%);
+				}	
+				&.not-empty{
+					span.amount, span.items{
+						color:@notif-color;
+					}	
+				}	
+			}			
+		}
 	}
 
 	/* 3. MAIN NAVIGATION DROPDOWN MENUS (Add main navigation presentational styles here) */
@@ -199,16 +231,17 @@ INDEX
 		ul.nav {
 			padding:0;
 			> li { // The following styles are applied ONLY to the top level list items
-				border-right:1px dotted lighten(@border_main,5%);
+				border-right:1px solid @topmenu-bg2 + #111;
 				a {
 					&:hover {
 						background: #fff;
-						.inset_box_shadow(0,.382em,0,0,@color_theme);
+						.inset_box_shadow(0,1px,0,0,@color_theme);
 					}
 				}
 				&:hover, &.current_page_item {
-					background: #fff;
-					.inset_box_shadow(0,.382em,0,0,@color_theme);
+					background: lighten(@topmenu-bg2, 8%);
+					color:#fff;
+					.inset_box_shadow(0,1px,0,0,@color_theme);
 				}
 			}
 			li {
@@ -220,6 +253,16 @@ INDEX
 					}
 				}
 			}
+			> li {
+			
+				> a{
+					color:#fff;
+					&:hover{
+						color: @color_theme - #444;
+					}
+				}
+				
+			}
 			// The home link
 			li.home {
 				border: 0;
@@ -227,7 +270,6 @@ INDEX
 					border: .327em solid @color_theme - #222;
 					padding:0;
 					.borderbox();
-					.border_radius_left(.236em);
 					span {
 						padding:.673em 1.618em;
 						display: inline-block;
@@ -352,15 +394,11 @@ INDEX
 	}
 
 	.post, .type-page {
-		padding:3.631em;
 		.woo-image:first-child {
 			float:right;
-			padding:.618em .618em 1.618em;
-			background: #fff;
+			padding:.618em .618em .618em;
+			background: #f4f4f4;
 			border:0;
-			.box_shadow(0,.077em,.146em, 0, rgba(0,0,0,0.15));
-			.border_radius(.236em);
-			.rotate(2deg);
 			width:11.089em;
 			margin-right:0;
 			margin-left:1.618em;
@@ -453,7 +491,6 @@ INDEX
 		margin:0 0 5.874em;
 		z-index: 99;
 		clear: both;
-		padding-top:3.631em;
 		li {
 			width:20%;
 			float: none;
@@ -475,15 +512,8 @@ INDEX
 					0 0 1em rgba(0,0,0,0.1);
 				z-index: -999999;
 			}
-			&:nth-child(4n), &.fourth {
-				width:39.9%;
-				margin-top:-20%;
-			}
 			&:nth-child(2n), &.second {
 				float: none;
-			}
-			&:nth-child(5n), &.fifth {
-				margin-left:20%;
 			}
 			img {
 				width:100%;
@@ -492,9 +522,9 @@ INDEX
 			h3 {
 				position: absolute;
 				bottom:0;
-				background: fade(@color_links,80%);
-				border-bottom:.382em solid @color_links;
-				color: #fff;
+				background: @feat-h3;
+				border-top: 1px solid darken(@feat-h3,15%);
+				color: #888;
 				margin:0;
 				padding:.54em .857em;
 				left:0;
@@ -519,9 +549,9 @@ INDEX
 				&:hover {
 					h3 {
 						//padding-bottom:1.387em;
-						border-color:@color_theme;
-						border-bottom-width:.857em;
-						background: fade(@color_theme,85%);
+						background: darken(@feat-h3,5%);
+						border-top: 1px solid darken(@topmenu-bg,1%);
+						color:@topmenu-bg;
 					}
 				}
 			}
@@ -632,6 +662,18 @@ INDEX
 			}
 		}
 	}
+	.custom-recent-product{
+		ul.products {
+			li.product {
+				width:29.53%;
+				clear:none !important;
+				margin-right: 3.8% !important;
+				&:nth-child(3n), &:nth-child(6n){
+					margin-right: 0 !important;
+				}
+			}
+		}	
+	}
 	.post-type-archive-product {
 		ul.products {
 			&:hover {
@@ -684,13 +726,13 @@ INDEX
 			ul.tabs {
 				width:29.75%;
 				float: left;
-				border-top:1px solid @bg_light - #111;
+				border-top:1px solid darken(@type_bg,5%); 
 				li {
 					display: block;
 					margin-right:0;
 					a {
 						display: block;
-						border-bottom:1px solid @bg_light - #111;
+						border-bottom:1px solid darken(@type_bg,5%); 
 						padding:.618em 0;
 					}
 					&.active {
@@ -707,10 +749,10 @@ INDEX
 			.panel {
 				width:65.4%;
 				padding-left:3.8%;
-				border-left:1px solid @bg_light - #111;
+				border-left:1px solid darken(@type_bg,5%); 
 				float: right;
 				margin-bottom:1.618em;
-				border-top:1px solid @bg_light - #111;
+				border-top:1px solid darken(@type_bg,5%); 
 				padding-top:1.618em;
 
 				p:last-child {
@@ -729,7 +771,6 @@ INDEX
 						top:-1.618em;
 						right:0;
 						background-color: @bg_light - #111;
-						.border_radius_bottom(.202em);
 						border:.53em solid @bg_light - #111;
 					}
 				}
@@ -861,20 +902,13 @@ INDEX
 		ul.featured-products {
 			li {
 				h3 {
-					background: @color_links;
+					background: @feat-h3;
 				}
 				&:hover {
 					h3 {
-						background: @color_theme;
+						background: darken(@feat-h3,25%);
 					}
 				}
-			}
-			li.fourth {
-				width:40%;
-				margin-top:-20%;
-			}
-			li.fifth {
-				margin-left:20%;
 			}
 		}
 
@@ -888,8 +922,5 @@ INDEX
 	}
 	#sidebar .widget {
 		margin-bottom:1em;
-	}
-	ul.featured-products li:nth-child(4n), ul.featured-products li.fourth {
-		width:40%;
 	}
 }
